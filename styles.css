@@ -22,7 +22,7 @@ body {
 }
 
 .section {
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   scroll-snap-align: start;
   position: relative;
@@ -224,6 +224,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+   margin-bottom: 0;
+  padding-bottom: 0;
   justify-content: flex-start;
   padding-top: 80px;
   height: auto;
@@ -443,11 +445,14 @@ body {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  position:relative;
   scroll-snap-align: center;
+  
 }
 
 .portal img {
-   width: 100%;
+  width: 100%;
+  
   height: 100%;
   object-fit: cover;
   filter: brightness(1.15) contrast(1.2) saturate(1.1);
@@ -466,6 +471,70 @@ body {
   50% { opacity: 0.85; }
   100% { opacity: 1; }
 }
+@media (max-width: 768px) {
+
+  .portal {
+    position: relative;
+
+    /* FORCE FULL PHONE WIDTH */
+    width: 100vw;
+    max-width: 100vw;
+
+    /* Break out of parent padding */
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+
+    min-height: 60vh;
+    background: black;
+    overflow: hidden;
+  }
+
+  .portal img {
+    position: absolute;
+    inset: 0;
+
+    /* FULL BLEED IMAGE */
+    width: 100vw;
+    height: 100%;
+    object-fit: cover;
+
+    /* SMUDGE INTO BLACK */
+    -webkit-mask-image: radial-gradient(
+      ellipse at center,
+      black 50%,
+      rgba(0,0,0,0.85) 65%,
+      rgba(0,0,0,0.4) 80%,
+      transparent 100%
+    );
+    mask-image: radial-gradient(
+      ellipse at center,
+      black 50%,
+      rgba(0,0,0,0.85) 65%,
+      rgba(0,0,0,0.4) 80%,
+      transparent 100%
+    );
+
+    transform: scale(1.1);
+  }
+  
+  /* Organic smudge irregularity */
+  .portal::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 30%, rgba(0,0,0,0.45), transparent 55%),
+      radial-gradient(circle at 85% 25%, rgba(0,0,0,0.45), transparent 55%),
+      radial-gradient(circle at 20% 80%, rgba(0,0,0,0.55), transparent 60%),
+      radial-gradient(circle at 80% 75%, rgba(0,0,0,0.55), transparent 60%);
+    pointer-events: none;
+    z-index: 3;
+  }
+
+}
+
 .portal::after {
   content: "";
   position: absolute;
@@ -690,18 +759,21 @@ pointer-events: none;
 
 /* FOOTER */
 .footer {
-  height: 50px;
+  height: 32px;              /* reduced height */
   background: black;
   display: flex;
   align-items: center;
   justify-content: center;
   position: relative;
-  font-size: 12px;
-  letter-spacing: 1.5px;
+
+  font-size: 10px;           /* smaller text */
+  letter-spacing: 1px;       /* tighter spacing */
   color: #9f1239;
+
   overflow: hidden;
   scroll-snap-align: end;
 }
+
 
 /* RESPONSIVE DESIGN */
 /* TABLET */
@@ -808,8 +880,11 @@ pointer-events: none;
   }
   
   .footer {
-    height: 40px;
-    font-size: 11px;
+   .footer {
+    height: 28px;
+    font-size: 9px;
+    letter-spacing: 0.8px;
+  }
   }
 }
 /* ================= REGISTER POPUP ================= */
