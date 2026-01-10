@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Litablaze 2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+
+  <div class="page-wrapper">
+
+    <!-- ================= HOME ================= -->
+    <section class="section" id="home">
+
+      <nav class="navbar">
+  <div class="logo">LITABLAZE</div>
+
+  <!-- HAMBURGER (visible only on mobile via CSS) -->
+  <div class="hamburger" onclick="toggleMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- NAV LINKS -->
+  <ul class="nav-links">
+    <li><a href="#home" onclick="toggleMenu()">HOME</a></li>
+    <li><a href="#hawkins" onclick="toggleMenu()">HAWKINS</a></li>
+    <li><a href="#upside" onclick="toggleMenu()">UPSIDE DOWN</a></li>
+  </ul>
+</nav>
+
+
+      <main class="hero">
+        <div class="title-wrapper">
+          <img src="assets/litablaze.png" class="title-image" alt="Litablaze" />
+        </div>
+
+        <p class="subtitle">
+          A Literary Signal From the Upside Down
+        </p>
+
+        <div class="card-container">
+          <a href="#hawkins" class="card">
+            <h2>ENTER HAWKINS</h2>
+            <p>(FLAGGED – CARNIVAL)</p>
+          </a>
+
+          <a href="#upside" class="card">
+            <h2>ENTER UPSIDE DOWN</h2>
+            <p>(UNFLAGGED – OTHERS)</p>
+          </a>
+        </div>
+      </main>
+
+    </section>
+
+    <!-- ================= HAWKINS ================= -->
+    <section class="section hawkins" id="hawkins">
+
+      <h1>WELCOME TO HAWKINS</h1>
+
+      <div class="events-section">
+
+        <div class="event-category" onclick="toggleCategory('flagged')">
+          <h2>FLAGGED EVENTS</h2>
+        </div>
+
+        <div class="event-list" id="flagged">
+          <div class="event-card"><span>JAM</span><button onclick="openRegister('JAM')">Register</button></div>
+          <div class="event-card"><span>Block and Tackle</span><button onclick="openRegister('Block and Tackle')">Register</button></div>
+          <div class="event-card"><span>Aiyoo Kekadha (Tamil / Tanglish)</span><button onclick="openRegister('Aiyoo Kekadha')">Register</button></div>
+          <div class="event-card"><span>Channel Surfing</span><button onclick="openRegister('Channel Surfing')">Register</button></div>
+        </div>
+
+        <div class="event-category" onclick="toggleCategory('unflagged')">
+          <h2>UNFLAGGED EVENTS</h2>
+        </div>
+
+        <div class="event-list" id="unflagged">
+          <div class="event-card"><span>Tamil Movie Auction</span><button onclick="openRegister('Tamil Movie Auction')">Register</button></div>
+          <div class="event-card"><span>Quiz</span><button onclick="openRegister('Quiz')">Register</button></div>
+          <div class="event-card"><span>Spell Bee</span><button onclick="openRegister('Spell Bee')">Register</button></div>
+          <div class="event-card"><span>Plot Twist</span><button onclick="openRegister('Plot Twist')">Register</button></div>
+          <div class="event-card"><span>Art Event</span><button onclick="openRegister('Art Event')">Register</button></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= PORTAL ================= -->
+    <section class="section portal">
+      <img src="assets/portal.png" class="portal-image" alt="Portal" />
+    </section>
+
+    <!-- ================= UPSIDE DOWN ================= -->
+    <section class="section upside-down" id="upside">
+
+      <h1>UPSIDE DOWN</h1>
+
+      <div class="events-section">
+
+        <div class="event-category" onclick="toggleCategory('carnival')">
+          <h2>CARNIVAL</h2>
+        </div>
+
+        <div class="event-list" id="carnival">
+          <div class="event-card"><span>Board Games (ft. Mani CEG)</span><button onclick="openUpsideRegister('Board Games')">Register</button></div>
+          <div class="event-card"><span>Tamil Board Games</span><button onclick="openUpsideRegister('Tamil Board Games')">Register</button></div>
+        </div>
+
+        <div class="event-category" onclick="toggleCategory('other-events')">
+          <h2>OTHER EVENTS</h2>
+        </div>
+
+        <div class="event-list" id="other-events">
+          <div class="event-card"><span>Melomatrix</span><button onclick="openUpsideRegister('Melomatrix')">Register</button></div>
+          <div class="event-card"><span>Saptham</span><button onclick="openUpsideRegister('Saptham')">Register</button></div>
+          <div class="event-card"><span>Flashmob (Marketing Event)</span><button onclick="openUpsideRegister('Flashmob')">Register</button></div>
+        </div>
+
+        <div class="event-category" onclick="toggleCategory('pre-event')">
+          <h2>PRE-EVENT</h2>
+        </div>
+
+        <div class="event-list" id="pre-event">
+          <div class="event-card"><span>Instagram Marketing Event</span><button onclick="openUpsideRegister('Instagram Marketing')">Register</button></div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+    <section class="section footer">
+      <p>LITABLAZE © 2026</p>
+    </section>
+
+  </div>
+
+  <!-- ================= REGISTRATION POPUP ================= -->
+  <div class="register-overlay" id="registerOverlay" onclick="closeRegister()">
+    <div class="register-popup" onclick="event.stopPropagation()">
+
+      <div class="register-header">
+        <h2>LITCLUB REGISTRATION</h2>
+        <span class="signal-text glitch" data-text="Signal Connected">
+          Signal Connected
+        </span>
+      </div>
+
+      <form class="register-form" onsubmit="event.preventDefault()">
+
+        <div class="form-group">
+          <label>Name</label>
+          <input type="text" name="name" required />
+        </div>
+
+        <div class="form-group">
+          <label>Department</label>
+          <input type="text" name="department" required />
+        </div>
+
+        <div class="form-group">
+          <label>Year</label>
+          <select name="year" required>
+            <option value="">Select</option>
+            <option>1st Year</option>
+            <option>2nd Year</option>
+            <option>3rd Year</option>
+            <option>4th Year</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Event</label>
+          <input type="text" id="eventField" name="event" readonly />
+        </div>
+
+        <div class="form-group">
+          <label>Contact Number</label>
+          <input type="tel" name="contact" required />
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-register">REGISTER</button>
+          <button type="button" class="btn-cancel" onclick="closeRegister()">CANCEL</button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+  <!-- ================= UPSIDE DOWN REGISTER POPUP ================= -->
+<div class="register-overlay upside" id="registerOverlayUpside" onclick="closeUpsideRegister()">
+  <div class="register-board" onclick="event.stopPropagation()">
+
+   
+
+    <form class="board-form">
+
+      <input type="text" placeholder="Name" required />
+      <input type="text" placeholder="Department" required />
+
+      <select required>
+        <option value="">Year</option>
+        <option>1st Year</option>
+        <option>2nd Year</option>
+        <option>3rd Year</option>
+        <option>4th Year</option>
+      </select>
+
+      <input type="text" id="upsideEventField" readonly />
+
+      <input type="tel" placeholder="Contact Number" required />
+
+      <div class="board-actions">
+        <button type="submit" class="btn-blue">REGISTER</button>
+        <button type="button" class="btn-blue cancel" onclick="closeUpsideRegister()">CANCEL</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>
+
+  <!-- ================= SCRIPT ================= -->
+  <script>
+    function toggleCategory(id) {
+      const element = document.getElementById(id);
+      if (element) element.classList.toggle("active");
+    }
+    function toggleMenu() {
+  const menu = document.querySelector(".nav-links");
+  const burger = document.querySelector(".hamburger");
+
+  menu.classList.toggle("active");
+  burger.classList.toggle("active");
+  document.body.classList.toggle("menu-open");
+}
+
+
+    function openRegister(eventName) {
+      document.getElementById("eventField").value = eventName;
+      document.getElementById("registerOverlay").classList.add("active");
+    }
+
+    function closeRegister() {
+      document.getElementById("registerOverlay").classList.remove("active");
+    }
+    function openUpsideRegister(eventName) {
+    document.getElementById("upsideEventField").value = eventName;
+    document.getElementById("registerOverlayUpside").classList.add("active");
+  }
+    function closeUpsideRegister() {
+  document.getElementById("registerOverlayUpside").classList.remove("active");
+}
+    document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") {
+      closeRegister();
+      closeUpsideRegister();
+    }
+  });
+  const navbar = document.querySelector(".navbar");
+  const upsideSection = document.querySelector("#upside");
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navbar.classList.add("upside-theme");
+        } else {
+          navbar.classList.remove("upside-theme");
+        }
+      });
+    },
+    {
+      threshold: 0.4
+    }
+  );
+
+  observer.observe(upsideSection);
+  </script>
+
+</body>
+</html>
