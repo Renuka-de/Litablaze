@@ -156,6 +156,7 @@ registrationForm.addEventListener("submit", async (e) => {
     event: document.getElementById("selectedEvent").value,
     name: document.getElementById("name").value,
     college: document.getElementById("college").value,
+    department: document.getElementById("department").value,
     email: document.getElementById("email").value,
     phone: document.getElementById("phone").value
   });
