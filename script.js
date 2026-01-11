@@ -149,30 +149,43 @@ function closeModal() {
 
 // ============= FORM SUBMISSION =============
 const registrationSuccess = document.getElementById("registrationSuccess");
-
-registrationForm.addEventListener("submit", async function (e) {
+registrationForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const data = {
-    litid: generateLITID(document.getElementById("selectedEvent").value),
+  const formData = new URLSearchParams({
     event: document.getElementById("selectedEvent").value,
     name: document.getElementById("name").value,
     college: document.getElementById("college").value,
     email: document.getElementById("email").value,
     phone: document.getElementById("phone").value
-  };
-
-  // SEND TO BACKEND
-  await fetch("http://localhost:3000/register", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(data)
   });
 
-  // UI UPDATE
-  registrationForm.style.display = "none";
-  document.getElementById("litidValue").textContent = data.litid;
-  document.getElementById("registrationSuccess").style.display = "block";
+  try {
+    const response = await fetch(
+      "https://script.google.com/macros/s/AKfycbwRNDaeu311NoB0Ks2Z0CCz9Ep2MXEWZ7-GGRmLoT2-MykzDUpEk4IR08fYVg2XsxQZ/exec",
+      {
+        method: "POST",
+        body: formData
+      }
+    );
+
+    const text = await response.text();
+    console.log("RAW RESPONSE:", text);
+
+    const result = JSON.parse(text);
+
+    if (result.success) {
+      registrationForm.style.display = "none";
+      document.getElementById("litidValue").textContent = result.litid;
+      registrationSuccess.style.display = "block";
+    } else {
+      alert("Registration failed");
+    }
+
+  } catch (err) {
+    console.error(err);
+    alert("Registration failed due to server error");
+  }
 });
 
 
