@@ -66,15 +66,15 @@ const eventData = {
         name: 'Board Games',
         category: 'Carnival',
         explanation: 'Kick back and enjoy classic and modern board games in a relaxed carnival atmosphere. From strategy games to party games, this is all about fun, friendship, and friendly competition. No pressure, just good vibes!',
-        rules: 'Open participation throughout the carnival. Multiple game stations available: Chess, Scrabble, Monopoly, Uno, Jenga, and more. Sign up at any station, play a game, and move on. Winners of each game earn points for small prizes.',
+        rules: 'Open participation throughout the carnival. Multiple game stations available: Carrom, Song association, Uno, Lemon on the Spoon and more. Sign up at any station, play a game, and move on. Winners of each game earn points for small prizes.',
         criteria: 'This is a casual, fun event with no formal judging. Winners are determined by game outcomes. Focus is on participation and enjoyment rather than competition.'
     },
     'traditional-board-games': {
         name: 'Traditional Board Games',
         category: 'Carnival',
-        explanation: 'Twin Telepathy tests how well you know your partner! Teams of two will be separated and asked identical questions. The goal? Give matching answers without communication. The more answers you sync, the higher your telepathy score!',
-        rules: 'Teams of 2 register together. Partners are separated into different rooms. Both answer 10 identical questions about preferences, opinions, and random choices. Teams earn 10 points per matching answer. Highest score wins. No communication between partners during the game.',
-        criteria: 'Number of matching answers (100%). This is purely about synchronization and knowing your partner. Creativity in answers is encouraged but doesn\'t affect scoring.'
+        explanation: 'Rediscover classic games like Pallanguzhi, Dhayakattai, Aadu Puli Aatam, Chakram Uruttu, and Paramapadham. Simple, nostalgic, and fun for everyone.',
+        rules: 'Open participation throughout the carnival. Multiple game stations available: Palanguzhi, Dhayakattai (Ludo), Aadu Puli Aatam, Chakram Uruttu, Paramapadham(Snake and Ladder) and more. Sign up at any station, play a game, and move on. Winners of each game earn points for small prizes.',
+        criteria: 'This is a casual, fun event with no formal judging. Winners are determined by game outcomes. Focus is on participation and enjoyment rather than competition.'
     }
 };
 
