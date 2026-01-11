@@ -69,8 +69,8 @@ const eventData = {
         rules: 'Open participation throughout the carnival. Multiple game stations available: Chess, Scrabble, Monopoly, Uno, Jenga, and more. Sign up at any station, play a game, and move on. Winners of each game earn points for small prizes.',
         criteria: 'This is a casual, fun event with no formal judging. Winners are determined by game outcomes. Focus is on participation and enjoyment rather than competition.'
     },
-    'twin-telepathy': {
-        name: 'Twin Telepathy',
+    'traditional-board-games': {
+        name: 'Traditional Board Games',
         category: 'Carnival',
         explanation: 'Twin Telepathy tests how well you know your partner! Teams of two will be separated and asked identical questions. The goal? Give matching answers without communication. The more answers you sync, the higher your telepathy score!',
         rules: 'Teams of 2 register together. Partners are separated into different rooms. Both answer 10 identical questions about preferences, opinions, and random choices. Teams earn 10 points per matching answer. Highest score wins. No communication between partners during the game.',
@@ -162,7 +162,7 @@ registrationForm.addEventListener("submit", async (e) => {
 
   try {
     const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbwRNDaeu311NoB0Ks2Z0CCz9Ep2MXEWZ7-GGRmLoT2-MykzDUpEk4IR08fYVg2XsxQZ/exec",
+      "https://script.google.com/macros/s/AKfycbxXYNrBH-uZiy5eSwN2rf6-xZz4uL5VwxKn4QNCwJbiTDIDpf2plZkaB4SPGqPxFAwV/exec",
       {
         method: "POST",
         body: formData
