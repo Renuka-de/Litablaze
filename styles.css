@@ -1069,13 +1069,15 @@ pointer-events: none;
   }
   
   .footer {
-   .footer {
+   
     height: 28px;
     font-size: 9px;
     letter-spacing: 0.8px;
+    align-items: center;
+  justify-content: center;
   }
   }
-}
+
 /* ================= REGISTER POPUP ================= */
 
 .register-overlay {
