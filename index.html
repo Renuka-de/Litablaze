@@ -26,9 +26,10 @@
 
   <!-- NAV LINKS -->
   <ul class="nav-links">
-    <li><a href="#home" onclick="toggleMenu()">HOME</a></li>
-    <li><a href="#hawkins" onclick="toggleMenu()">HAWKINS</a></li>
-    <li><a href="#upside" onclick="toggleMenu()">UPSIDE DOWN</a></li>
+    <li><a href="#home" class="nav-link">HOME</a></li>
+    <li><a href="#hawkins" class="nav-link">HAWKINS</a></li>
+    <li><a href="#upside" class="nav-link">UPSIDE DOWN</a></li>
+    <li><a href="https://litable-au-website-swart.vercel.app/" class="nav-link">LITABLEAU</a></li>
   </ul>
 </nav>
 
@@ -50,7 +51,7 @@
 
           <a href="#upside" class="card">
             <h2>ENTER UPSIDE DOWN</h2>
-            <p>(UNFLAGGED – OTHERS)</p>
+            <p>(UNFLAGGED)</p>
           </a>
         </div>
       </main>
@@ -63,28 +64,76 @@
       <h1>WELCOME TO HAWKINS</h1>
 
       <div class="events-section">
+  <div class="event-category" onclick="toggleCategory('flagged', this)" role="button" aria-controls="flagged" aria-expanded="false">
+  <h2>FLAGGED EVENTS</h2>
+  <span class="chevron" aria-hidden="true" title="Toggle list">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M6 9l6 6 6-6"></path>
+    </svg>
+  </span>
+</div>
 
-        <div class="event-category" onclick="toggleCategory('flagged')">
-          <h2>FLAGGED EVENTS</h2>
-        </div>
+  <div class="event-list" id="flagged">
+    <div class="event-card">
+      <h3 class="event-title">JAM</h3>
+      <p class="event-desc">A rapid-read poetry slam where participants get three minutes to move the crowd.</p>
+      <button class="register-btn" onclick="openRegister('jam')">Register</button>
+    </div>
 
-        <div class="event-list" id="flagged">
-          <div class="event-card"><span>JAM</span><button onclick="openRegister('JAM')">Register</button></div>
-          <div class="event-card"><span>Block and Tackle</span><button onclick="openRegister('Block and Tackle')">Register</button></div>
-          <div class="event-card"><span>Aiyoo Kekadha (Tamil / Tanglish)</span><button onclick="openRegister('Aiyoo Kekadha')">Register</button></div>
-          <div class="event-card"><span>Channel Surfing</span><button onclick="openRegister('Channel Surfing')">Register</button></div>
-        </div>
+    <div class="event-card">
+      <h3 class="event-title">Block and Tackle</h3>
+      <p class="event-desc">Team-based improv writing challenge. Fast, loud, and absurdly fun.</p>
+      <button class="register-btn" onclick="openRegister('block-and-tackle')">Register</button>
+    </div>
 
-        <div class="event-category" onclick="toggleCategory('unflagged')">
-          <h2>UNFLAGGED EVENTS</h2>
-        </div>
+    <div class="event-card">
+      <h3 class="event-title">Aiyoo Kekadha (Tamil / Tanglish)</h3>
+      <p class="event-desc">A regional storytelling competition with a twist—use local idioms and win hearts.</p>
+      <button class="register-btn" onclick="openRegister('aiyoo-kekadha')">Register</button>
+    </div>
+    <div class="event-card">
+      <h3 class="event-title">Channel Surfing</h3>
+      <p class="event-desc">A regional storytelling competition with a twist—use local idioms and win hearts.</p>
+      <button class="register-btn" onclick="openRegister('channel-surfing')">Register</button>
+    </div>
+  </div>
+          
+
+         <div class="event-category" onclick="toggleCategory('unflagged', this)" role="button" aria-controls="flagged" aria-expanded="false">
+  <h2>UNFLAGGED EVENTS</h2>
+  <span class="chevron" aria-hidden="true" title="Toggle list">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M6 9l6 6 6-6"></path>
+    </svg>
+  </span>
+</div>
 
         <div class="event-list" id="unflagged">
-          <div class="event-card"><span>Tamil Movie Auction</span><button onclick="openRegister('Tamil Movie Auction')">Register</button></div>
-          <div class="event-card"><span>Quiz</span><button onclick="openRegister('Quiz')">Register</button></div>
-          <div class="event-card"><span>Spell Bee</span><button onclick="openRegister('Spell Bee')">Register</button></div>
-          <div class="event-card"><span>Plot Twist</span><button onclick="openRegister('Plot Twist')">Register</button></div>
-          <div class="event-card"><span>Art Event</span><button onclick="openRegister('Art Event')">Register</button></div>
+           <div class="event-card">
+            <h3 class="event-title">Tamil Movie Auction</h3>
+            <p class="event-desc">A rapid-read poetry slam where participants get three minutes to move the crowd.</p>
+            <button class="register-btn" onclick="openRegister('tamil-movie-auction')">Register</button>
+          </div>
+          <div class="event-card">
+            <h3 class="event-title">Quiz</h3>
+            <p class="event-desc">A rapid-read poetry slam where participants get three minutes to move the crowd.</p>
+            <button class="register-btn" onclick="openRegister('quiz')">Register</button>
+          </div>
+          <div class="event-card">
+            <h3 class="event-title">Spell Bee</h3>
+            <p class="event-desc">A rapid-read poetry slam where participants get three minutes to move the crowd.</p>
+            <button class="register-btn" onclick="openRegister('spell-bee')">Register</button>
+          </div>
+          <div class="event-card">
+            <h3 class="event-title">Plot Twist</h3>
+            <p class="event-desc">A rapid-read poetry slam where participants get three minutes to move the crowd.</p>
+            <button class="register-btn" onclick="openRegister('plot-twist')">Register</button>
+          </div>
+          <div class="event-card">
+            <h3 class="event-title">Art Event</h3>
+            <p class="event-desc">A rapid-read poetry slam where participants get three minutes to move the crowd.</p>
+            <button class="register-btn" onclick="openRegister('art-event')">Register</button>
+          </div>
         </div>
 
       </div>
@@ -94,42 +143,38 @@
     <section class="section portal">
       <img src="assets/portal.png" class="portal-image" alt="Portal" />
     </section>
-
+    
     <!-- ================= UPSIDE DOWN ================= -->
     <section class="section upside-down" id="upside">
 
       <h1>UPSIDE DOWN</h1>
-
       <div class="events-section">
-
-        <div class="event-category" onclick="toggleCategory('carnival')">
-          <h2>CARNIVAL</h2>
-        </div>
+       <div class="event-category" onclick="toggleCategory('carnival', this)" role="button" aria-controls="flagged" aria-expanded="false">
+  <h2>CARNIVAL</h2>
+  <span class="chevron" aria-hidden="true" title="Toggle list">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+      <path d="M6 9l6 6 6-6"></path>
+    </svg>
+  </span>
+</div>
 
         <div class="event-list" id="carnival">
-          <div class="event-card"><span>Board Games (ft. Mani CEG)</span><button onclick="openUpsideRegister('Board Games')">Register</button></div>
-          <div class="event-card"><span>Tamil Board Games</span><button onclick="openUpsideRegister('Tamil Board Games')">Register</button></div>
+          <div class="event-card">
+            <h3 class="event-title">Board Games (ft. Mani CEG)</h3>
+            <p class="event-desc">Classic and modern board play—strategy, laughter and cunning.</p>
+            <button class="register-btn" onclick="openUpsideRegister('board-games')">Register</button>
+          </div>
+
+          <div class="event-card">
+            <h3 class="event-title">Twin Telepathy</h3>
+            <p class="event-desc">Localized board-game variants—learn, play, and win cultural prizes.</p>
+            <button class="register-btn" onclick="openUpsideRegister('twin-telepathy')">Register</button>
+          </div>
         </div>
 
-        <div class="event-category" onclick="toggleCategory('other-events')">
-          <h2>OTHER EVENTS</h2>
+       
         </div>
 
-        <div class="event-list" id="other-events">
-          <div class="event-card"><span>Melomatrix</span><button onclick="openUpsideRegister('Melomatrix')">Register</button></div>
-          <div class="event-card"><span>Saptham</span><button onclick="openUpsideRegister('Saptham')">Register</button></div>
-          <div class="event-card"><span>Flashmob (Marketing Event)</span><button onclick="openUpsideRegister('Flashmob')">Register</button></div>
-        </div>
-
-        <div class="event-category" onclick="toggleCategory('pre-event')">
-          <h2>PRE-EVENT</h2>
-        </div>
-
-        <div class="event-list" id="pre-event">
-          <div class="event-card"><span>Instagram Marketing Event</span><button onclick="openUpsideRegister('Instagram Marketing')">Register</button></div>
-        </div>
-
-      </div>
     </section>
 
     <!-- ================= FOOTER ================= -->
@@ -138,150 +183,97 @@
     </section>
 
   </div>
+   <!-- ================= REGISTRATION MODAL ================= -->
+<div id="registrationModal" class="modal" onclick="closeRegister()">
+  <div class="modal-content" onclick="event.stopPropagation()">
 
-  <!-- ================= REGISTRATION POPUP ================= -->
-  <div class="register-overlay" id="registerOverlay" onclick="closeRegister()">
-    <div class="register-popup" onclick="event.stopPropagation()">
+    <span class="close-btn" onclick="closeRegister()">&times;</span>
 
-      <div class="register-header">
-        <h2>LITCLUB REGISTRATION</h2>
-        <span class="signal-text glitch" data-text="Signal Connected">
-          Signal Connected
-        </span>
+    <div class="modal-header">
+      <h2 class="modal-title flicker">Register Before the Gate Closes</h2>
+      <p class="modal-event-name">
+        Registering for: <span id="eventName">Event Name</span>
+      </p>
+    </div>
+
+    <div class="modal-body">
+
+      <!-- Event Details -->
+      <div class="event-details">
+        <div class="detail-section">
+          <h3 class="detail-title">Event Explanation</h3>
+          <p id="eventExplanation" class="detail-text"></p>
+        </div>
+
+        <div class="detail-section">
+          <h3 class="detail-title">Rules</h3>
+          <p id="eventRules" class="detail-text"></p>
+        </div>
+
+        <div class="detail-section">
+          <h3 class="detail-title">Judging Criteria</h3>
+          <p id="eventCriteria" class="detail-text"></p>
+        </div>
       </div>
 
-      <form class="register-form" onsubmit="event.preventDefault()">
+      <!-- Registration Form -->
+      <form id="registrationForm" class="registration-form" onsubmit="event.preventDefault()">
+        <input type="hidden" id="selectedEvent" name="event">
 
         <div class="form-group">
           <label>Name</label>
-          <input type="text" name="name" required />
+          <input type="text" id="name" required>
         </div>
 
         <div class="form-group">
-          <label>Department</label>
-          <input type="text" name="department" required />
+          <label>College / Department</label>
+          <input type="text" id="college" required>
         </div>
 
         <div class="form-group">
-          <label>Year</label>
-          <select name="year" required>
-            <option value="">Select</option>
-            <option>1st Year</option>
-            <option>2nd Year</option>
-            <option>3rd Year</option>
-            <option>4th Year</option>
-          </select>
+          <label>Email</label>
+          <input type="email" id="email" required>
         </div>
 
         <div class="form-group">
-          <label>Event</label>
-          <input type="text" id="eventField" name="event" readonly />
-        </div>
-
-        <div class="form-group">
-          <label>Contact Number</label>
-          <input type="tel" name="contact" required />
+          <label>Phone Number</label>
+          <input type="tel" id="phone" required>
         </div>
 
         <div class="form-actions">
-          <button type="submit" class="btn-register">REGISTER</button>
-          <button type="button" class="btn-cancel" onclick="closeRegister()">CANCEL</button>
+          <button type="submit" class="btn-register">Submit Registration</button>
+          <button type="button" class="btn-cancel" onclick="closeRegister()">Back</button>
         </div>
-
       </form>
+      <!-- Registration Success -->
+  <div id="registrationSuccess" class="registration-success" style="display:none;">
+  <h2 class="success-title">REGISTRATION CONFIRMED</h2>
+
+  <p class="success-text">
+    Your Registration ID
+  </p>
+
+  <div class="litid-box" id="litidValue">
+    LIT26-XXXX
+  </div>
+
+  <p class="note-text">
+    ⚠ Please take a note of this <strong>LIT ID</strong>.  
+    This will be required during check-in.
+  </p>
+
+  <div class="form-actions">
+    <button class="btn-register" onclick="closeRegister()">DONE</button>
+  </div>
+  </div>
 
     </div>
   </div>
-  <!-- ================= UPSIDE DOWN REGISTER POPUP ================= -->
-<div class="register-overlay upside" id="registerOverlayUpside" onclick="closeUpsideRegister()">
-  <div class="register-board" onclick="event.stopPropagation()">
-
-   
-
-    <form class="board-form">
-
-      <input type="text" placeholder="Name" required />
-      <input type="text" placeholder="Department" required />
-
-      <select required>
-        <option value="">Year</option>
-        <option>1st Year</option>
-        <option>2nd Year</option>
-        <option>3rd Year</option>
-        <option>4th Year</option>
-      </select>
-
-      <input type="text" id="upsideEventField" readonly />
-
-      <input type="tel" placeholder="Contact Number" required />
-
-      <div class="board-actions">
-        <button type="submit" class="btn-blue">REGISTER</button>
-        <button type="button" class="btn-blue cancel" onclick="closeUpsideRegister()">CANCEL</button>
-      </div>
-
-    </form>
-
-  </div>
 </div>
 
+
   <!-- ================= SCRIPT ================= -->
-  <script>
-    function toggleCategory(id) {
-      const element = document.getElementById(id);
-      if (element) element.classList.toggle("active");
-    }
-    function toggleMenu() {
-  const menu = document.querySelector(".nav-links");
-  const burger = document.querySelector(".hamburger");
-
-  menu.classList.toggle("active");
-  burger.classList.toggle("active");
-  document.body.classList.toggle("menu-open");
-}
-
-
-    function openRegister(eventName) {
-      document.getElementById("eventField").value = eventName;
-      document.getElementById("registerOverlay").classList.add("active");
-    }
-
-    function closeRegister() {
-      document.getElementById("registerOverlay").classList.remove("active");
-    }
-    function openUpsideRegister(eventName) {
-    document.getElementById("upsideEventField").value = eventName;
-    document.getElementById("registerOverlayUpside").classList.add("active");
-  }
-    function closeUpsideRegister() {
-  document.getElementById("registerOverlayUpside").classList.remove("active");
-}
-    document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") {
-      closeRegister();
-      closeUpsideRegister();
-    }
-  });
-  const navbar = document.querySelector(".navbar");
-  const upsideSection = document.querySelector("#upside");
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          navbar.classList.add("upside-theme");
-        } else {
-          navbar.classList.remove("upside-theme");
-        }
-      });
-    },
-    {
-      threshold: 0.4
-    }
-  );
-
-  observer.observe(upsideSection);
-  </script>
+   <script src="script.js"></script>
 
 </body>
 </html>
