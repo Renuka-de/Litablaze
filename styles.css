@@ -68,7 +68,7 @@ body {
 
 .title-image {
   width: 800px;
-  padding:70px;
+  
   max-width: 90vw;
   animation: zoomLoop 10s ease-in-out infinite;
   filter: drop-shadow(0 0 40px rgba(255, 0, 0, 0.7));
@@ -957,7 +957,7 @@ pointer-events: none;
 
   font-size: 10px;           /* smaller text */
   letter-spacing: 1px;       /* tighter spacing */
-  color: #9f1239;
+  color: #0896f5;
 
   overflow: hidden;
   scroll-snap-align: end;
