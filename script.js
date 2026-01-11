@@ -152,28 +152,25 @@ const registrationSuccess = document.getElementById("registrationSuccess");
 registrationForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
-  const formData = new URLSearchParams({
-    event: document.getElementById("selectedEvent").value,
-    name: document.getElementById("name").value,
-    college: document.getElementById("college").value,
-    department: document.getElementById("department").value,
-    email: document.getElementById("email").value,
-    phone: document.getElementById("phone").value
-  });
+  const form = document.getElementById("registrationForm");
+  const payload = new FormData();
+  payload.append("event", document.getElementById("selectedEvent").value);
+  payload.append("name", document.getElementById("name").value.trim());
+  payload.append("college", document.getElementById("college").value.trim());
+  payload.append("department", document.getElementById("department").value.trim());
+  payload.append("email", document.getElementById("email").value.trim());
+  payload.append("phone", document.getElementById("phone").value.trim());
 
   try {
     const response = await fetch(
-      "https://script.google.com/macros/s/AKfycbxXYNrBH-uZiy5eSwN2rf6-xZz4uL5VwxKn4QNCwJbiTDIDpf2plZkaB4SPGqPxFAwV/exec",
+      "https://script.google.com/macros/s/AKfycbwf04wXUqYDF05q6OFZME8Mrui5qa5MlixQLQ5vMoeuSFA792iFc7Av5k9-j46-cjH1/exec",
       {
         method: "POST",
-        body: formData
+        body: payload
       }
     );
 
-    const text = await response.text();
-    console.log("RAW RESPONSE:", text);
-
-    const result = JSON.parse(text);
+    const result = await response.json();
 
     if (result.success) {
       registrationForm.style.display = "none";
@@ -185,9 +182,10 @@ registrationForm.addEventListener("submit", async (e) => {
 
   } catch (err) {
     console.error(err);
-    alert("Registration failed due to server error");
+    alert("Server error");
   }
 });
+
 
 
 function toggleCategory(id, headerEl) {

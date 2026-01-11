@@ -2157,12 +2157,7 @@ pointer-events: none;
     z-index: 9998;
   }
 }
-@media (min-width: 769px) {
-  #home,
-  .section {
-    padding-top: 70px;
-  }
-}
+
 @media (min-width: 769px) {
   .navbar {
     backdrop-filter: blur(8px);
@@ -2228,10 +2223,7 @@ pointer-events: none;
 }
 /* MOBILE */
 @media (max-width: 768px) {
-  .section
-  {
-    padding: 70px;
-  }
+
   .navbar {
     padding: 0 20px;
     height: 70px; /* Fixed navbar height */
@@ -2331,10 +2323,7 @@ pointer-events: none;
 
 /* SMALL MOBILE - Adjustments for quarter height */
 @media (max-width: 480px) {
-  .section
-  {
-    padding: 70px;
-  }
+ 
   .logo {
     font-size: 14px;
     letter-spacing: 1.5px;
@@ -2646,4 +2635,31 @@ pointer-events: none;
   box-shadow:
     0 0 16px rgba(56,189,248,0.9),
     0 0 30px rgba(56,189,248,0.6);
+}
+/* ================= MOBILE NAVBAR OVERLAP FIX ================= */
+
+@media (max-width: 768px) {
+ 
+.navbar.logo {
+  flex-shrink: 0;          /* NEVER shrink */
+  min-width: max-content; /* Reserve its width */
+}
+
+  /* Offset all sections BELOW fixed navbar */
+  .section {
+    padding-top: 90px; /* navbar height + breathing space */
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  /* Hawkins heading should NEVER sit under navbar */
+  .hawkins h1 {
+    margin-top: 0;
+    padding-top: 20px;
+  }
+
+  /* Mobile menu must push content, not overlap */
+  .nav-links {
+    top: 70px; /* exactly navbar height */
+  }
 }
