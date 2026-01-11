@@ -67,14 +67,14 @@ const eventData = {
         category: 'Carnival',
         explanation: 'Kick back and enjoy classic and modern board games in a relaxed carnival atmosphere. From strategy games to party games, this is all about fun, friendship, and friendly competition. No pressure, just good vibes!',
         rules: 'Open participation throughout the carnival. Multiple game stations available: Carrom, Song association, Uno, Lemon on the Spoon and more. Sign up at any station, play a game, and move on. Winners of each game earn points for small prizes.',
-        criteria: 'This is a casual, fun event with no formal judging. Winners are determined by game outcomes. Focus is on participation and enjoyment rather than competition.'
+        criteria: 'This is a casual, fun event with no formal judging. Winners are determined by game outcomes.'
     },
     'traditional-board-games': {
         name: 'Traditional Board Games',
         category: 'Carnival',
         explanation: 'Rediscover classic games like Pallanguzhi, Dhayakattai, Aadu Puli Aatam, Chakram Uruttu, and Paramapadham. Simple, nostalgic, and fun for everyone.',
         rules: 'Open participation throughout the carnival. Multiple game stations available: Palanguzhi, Dhayakattai (Ludo), Aadu Puli Aatam, Chakram Uruttu, Paramapadham(Snake and Ladder) and more. Sign up at any station, play a game, and move on. Winners of each game earn points for small prizes.',
-        criteria: 'This is a casual, fun event with no formal judging. Winners are determined by game outcomes. Focus is on participation and enjoyment rather than competition.'
+        criteria: 'This is a casual, fun event with no formal judging. Winners are determined by game outcomes.'
     }
 };
 
