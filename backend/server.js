@@ -2,12 +2,17 @@ const express = require("express");
 const XLSX = require("xlsx");
 const fs = require("fs");
 const cors = require("cors");
+const https = require('https');
 
 const app = express();
 app.use(express.json());
 app.use(cors());
 
 const FILE = "registrations.xlsx";
+
+// Google Script that currently holds registrations (read-only proxy)
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwf04wXUqYDF05q6OFZME8Mrui5qa5MlixQLQ5vMoeuSFA792iFc7Av5k9-j46-cjH1/exec";
 
 // CREATE FILE IF NOT EXISTS
 if (!fs.existsSync(FILE)) {
@@ -39,6 +44,30 @@ app.post("/register", (req, res) => {
   XLSX.writeFile(wb, FILE);
 
   res.json({ status: "success" });
+});
+
+// Proxy endpoint to fetch registrations from the Google Script server-side
+// This avoids CORS issues when the client is served from file:// or other origins.
+app.get('/proxy-registrations', (req, res) => {
+  const email = req.query.email || '';
+  const url = `${SCRIPT_URL}?email=${encodeURIComponent(email)}`;
+
+  https.get(url, (gRes) => {
+    let data = '';
+    gRes.on('data', chunk => data += chunk);
+    gRes.on('end', () => {
+      try {
+        const parsed = JSON.parse(data);
+        res.json(parsed);
+      } catch (err) {
+        // If upstream didn't return JSON, forward raw
+        res.send(data);
+      }
+    });
+  }).on('error', (err) => {
+    console.error('Proxy fetch error', err);
+    res.status(502).json({ error: 'upstream_fetch_failed' });
+  });
 });
 
 app.listen(3000, () =>

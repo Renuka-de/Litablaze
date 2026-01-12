@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>My Profile | Litablaze 2026</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: radial-gradient(circle at top, #1a0000, #000);
+      color: #fca5a5;
+      font-family: "Times New Roman", serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .profile-card {
+      width: 90%;
+      max-width: 700px;
+      background: rgba(0,0,0,0.75);
+      border: 2px solid #dc2626;
+      border-radius: 18px;
+      padding: 32px;
+      box-shadow:
+        0 0 30px rgba(220,38,38,0.7),
+        inset 0 0 40px rgba(0,0,0,0.85);
+    }
+
+    h1 {
+      text-align: center;
+      color: #dc2626;
+      letter-spacing: 3px;
+      margin-bottom: 10px;
+      text-shadow: 0 0 18px rgba(220,38,38,0.9);
+    }
+
+    .user-info {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .user-info p {
+      margin: 6px 0;
+      font-size: 15px;
+      letter-spacing: 1px;
+    }
+
+    .registrations-title {
+      margin-bottom: 14px;
+      letter-spacing: 2px;
+      color: #f87171;
+    }
+
+    .registration {
+      background: rgba(0,0,0,0.6);
+      border: 1px solid rgba(220,38,38,0.6);
+      border-radius: 14px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+      box-shadow: 0 0 14px rgba(220,38,38,0.25);
+    }
+
+    .registration strong {
+      color: #dc2626;
+      letter-spacing: 1px;
+    }
+
+    .no-registrations {
+      text-align: center;
+      opacity: 0.7;
+      margin-top: 20px;
+    }
+
+    .actions {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+    }
+
+    .btn {
+      padding: 10px 26px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 2px;
+      font-weight: bold;
+      transition: all 0.3s ease;
+    }
+
+    .btn-home {
+      background: #dc2626;
+      color: black;
+    }
+
+    .btn-home:hover {
+      background: #f87171;
+      box-shadow: 0 0 20px rgba(220,38,38,0.9);
+    }
+
+    .btn-logout {
+      background: transparent;
+      color: #fca5a5;
+      border: 1px solid rgba(220,38,38,0.6);
+    }
+
+    .btn-logout:hover {
+      background: rgba(220,38,38,0.25);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="profile-card">
+    <h1>MY PROFILE</h1>
+
+    <div class="user-info">
+      <p><strong>Name:</strong> <span id="userName"></span></p>
+      <p><strong>Email:</strong> <span id="userEmail"></span></p>
+    </div>
+
+    <h3 class="registrations-title">MY REGISTRATIONS</h3>
+    <div id="registrationsContainer"></div>
+
+    <div class="actions">
+      <button class="btn btn-home" onclick="goHome()">HOME</button>
+      <button class="btn btn-logout" onclick="logout()">LOGOUT</button>
+    </div>
+  </div>
+
+  <script>
+const profile = JSON.parse(localStorage.getItem("litablaze_profile"));
+const regs = JSON.parse(localStorage.getItem("litablaze_sheet_regs")) || {};
+
+if (!profile) {
+  window.location.href = "login.html";
+}
+
+document.getElementById("userName").textContent = profile.name;
+document.getElementById("userEmail").textContent = profile.email;
+
+const container = document.getElementById("registrationsContainer");
+
+const events = Object.keys(regs);
+
+if (events.length === 0) {
+  container.innerHTML = `<p class="no-registrations">No registrations yet.</p>`;
+} else {
+  events.forEach(event => {
+    const div = document.createElement("div");
+    div.className = "registration";
+    div.innerHTML = `
+      <p><strong>Event:</strong> ${event}</p>
+      <p><strong>LIT ID:</strong> ${regs[event]}</p>
+    `;
+    container.appendChild(div);
+  });
+}
+
+
+    function goHome() {
+      window.location.href = "index.html";
+    }
+
+    function logout() {
+      localStorage.removeItem("litablaze_profile");
+      window.location.href = "login.html";
+    }
+  </script>
+
+</body>
+</html>

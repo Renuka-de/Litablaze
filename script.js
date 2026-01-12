@@ -1,3 +1,6 @@
+const SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwf04wXUqYDF05q6OFZME8Mrui5qa5MlixQLQ5vMoeuSFA792iFc7Av5k9-j46-cjH1/exec";
+
 let currentLevel = 0;
 
 const eventData = {
@@ -173,10 +176,27 @@ registrationForm.addEventListener("submit", async (e) => {
     const result = await response.json();
 
     if (result.success) {
-      registrationForm.style.display = "none";
-      document.getElementById("litidValue").textContent = result.litid;
-      registrationSuccess.style.display = "block";
-    } else {
+  document.getElementById("litidValue").textContent = result.litid;
+  registrationForm.style.display = "none";
+  registrationSuccess.style.display = "block";
+
+  const email = document.getElementById("email").value;
+
+  // 🔁 RE-FETCH FROM GOOGLE SHEETS
+  try {
+    const data = await fetchFromGoogleScript(email);
+    const regs = extractRegistrationsByEmail(data, email);
+    const normalized = Object.keys(regs).length ? regs : normalizeRegistrations(data);
+    localStorage.setItem("litablaze_sheet_regs", JSON.stringify(normalized));
+    updateEventButtons();
+  } catch (err) {
+    console.error("Refresh failed", err);
+  }
+}
+
+
+
+    else {
       alert("Registration failed");
     }
 
@@ -315,3 +335,275 @@ function generateLITID(eventKey) {
   const rand = Math.random().toString(36).substring(2, 6).toUpperCase();
   return `LIT26-${eventKey.toUpperCase().slice(0,6)}-${rand}`;
 }
+
+
+
+function goToProfile() {
+  const profile = localStorage.getItem("litablaze_profile");
+
+  if (!profile) {
+    window.location.href = "login.html";
+  } else {
+    window.location.href = "profile.html";
+  }
+}
+// Normalize various shapes returned from the Google Script into a
+// { "Event Name": "LITID" } mapping that the UI expects.
+function normalizeRegistrations(raw) {
+  if (!raw) return {};
+
+  // Already an object mapping
+  if (typeof raw === 'object' && !Array.isArray(raw)) {
+    return raw;
+  }
+
+  // Array of entries -> try to convert
+  if (Array.isArray(raw)) {
+    const map = {};
+
+    raw.forEach(item => {
+      if (!item) return;
+
+      // If item is [event, litid] style
+      if (Array.isArray(item) && item.length >= 2) {
+        const name = String(item[0]).trim();
+        const id = String(item[1]).trim();
+        if (name) map[name] = id;
+        return;
+      }
+
+      // If item is object, attempt common key names
+      if (typeof item === 'object') {
+        const keys = Object.keys(item).map(k => k.toLowerCase());
+
+        // common variations
+        const eventKey = keys.find(k => /event|eventname|event_name|event title|eventtitle/.test(k));
+        const idKey = keys.find(k => /lit|id|litid|registration|registrationid|registration_id/.test(k));
+
+        const name = eventKey ? String(item[eventKey]).trim() : null;
+        const id = idKey ? String(item[idKey]).trim() : null;
+
+        if (name && id) {
+          map[name] = id;
+          return;
+        }
+
+        // fallback: try first two string-y fields
+        const stringFields = Object.values(item).filter(v => typeof v === 'string' && v.trim());
+        if (stringFields.length >= 2) {
+          map[String(stringFields[0]).trim()] = String(stringFields[1]).trim();
+        }
+      }
+    });
+
+    return map;
+  }
+
+  // Unknown shape -> empty
+  return {};
+}
+
+// Attempt to pull event registrations out of many possible response shapes.
+// Returns a simple mapping: { "Event Name": "LITID" }
+function extractRegistrationsByEmail(raw, email) {
+  if (!raw) return {};
+
+  const regs = {};
+  const lowerEmail = (email || '').toLowerCase();
+
+  function processRow(row) {
+    if (!row) return;
+    // If row is an array, try to interpret first 3 columns as [event, litid, email]
+    if (Array.isArray(row)) {
+      const [a, b, c] = row.map(v => (v || '').toString().trim());
+      if (c && lowerEmail && c.toLowerCase().includes(lowerEmail)) {
+        if (a && b) regs[a] = b;
+      }
+      return;
+    }
+
+    if (typeof row === 'object') {
+      const keys = Object.keys(row);
+      const lowerKeys = keys.map(k => k.toLowerCase());
+
+      // find likely fields
+      const emailKey = keys[lowerKeys.findIndex(k => /email|e-mail/.test(k))];
+      const eventKey = keys[lowerKeys.findIndex(k => /event|eventname|event_name|event title|eventtitle/.test(k))];
+      const idKey = keys[lowerKeys.findIndex(k => /lit|id|litid|registration|registrationid|registration_id/.test(k))];
+
+      const rowEmail = emailKey ? String(row[emailKey]).trim().toLowerCase() : null;
+      const eventName = eventKey ? String(row[eventKey]).trim() : null;
+      const litid = idKey ? String(row[idKey]).trim() : null;
+
+      if (rowEmail && lowerEmail && rowEmail.includes(lowerEmail) && eventName && litid) {
+        regs[eventName] = litid;
+        return;
+      }
+
+      // fallback: if object contains both an event-like and id-like string values and email appears anywhere
+      const allValues = Object.values(row).map(v => (v || '').toString());
+      const anyEmailMatch = allValues.some(v => lowerEmail && v.toLowerCase().includes(lowerEmail));
+      if (anyEmailMatch) {
+        const ev = allValues.find(v => /[A-Za-z0-9\s\-()]{3,}/.test(v) && !/@/.test(v));
+        const id = allValues.find(v => /LIT|LIT\d|[A-Z0-9\-]{4,}/.test(v));
+        if (ev && id) regs[ev.trim()] = id.trim();
+      }
+    }
+  }
+
+  // If raw is an object with sheet names -> flatten
+  if (typeof raw === 'object' && !Array.isArray(raw)) {
+    for (const k in raw) {
+      const v = raw[k];
+      if (Array.isArray(v)) {
+        v.forEach(processRow);
+      } else if (typeof v === 'object') {
+        // maybe it's a single row or mapping
+        processRow(v);
+      }
+    }
+    // also try direct object form
+    if (Object.keys(raw).length && Object.values(raw).every(v => typeof v === 'string')) {
+      // maybe mapping event->litid where keys are events
+      for (const [k, val] of Object.entries(raw)) {
+        regs[k] = String(val);
+      }
+    }
+  }
+
+  // If it's an array of rows
+  if (Array.isArray(raw)) {
+    raw.forEach(processRow);
+  }
+
+  return regs;
+}
+
+async function fetchRegistrationsForProfile() {
+  const profile = JSON.parse(localStorage.getItem('litablaze_profile') || 'null');
+  if (!profile || !profile.email) return;
+
+  try {
+    const raw = await fetchFromGoogleScript(profile.email);
+    // prefer extracting rows by matching email if possible
+    const regs = extractRegistrationsByEmail(raw, profile.email);
+    const normalized = Object.keys(regs).length ? regs : normalizeRegistrations(raw);
+    localStorage.setItem('litablaze_sheet_regs', JSON.stringify(normalized));
+  } catch (err) {
+    console.warn('Could not fetch registrations for profile:', err);
+  }
+}
+
+// Try to fetch JSON from the Google Script endpoint; if blocked by CORS or fails,
+// attempt JSONP by injecting a <script> tag with a callback parameter.
+function fetchFromGoogleScript(email) {
+  const url = `${SCRIPT_URL}?email=${encodeURIComponent(email)}`;
+
+  return new Promise(async (resolve, reject) => {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('non-200');
+      const data = await res.json();
+      return resolve(data);
+    } catch (err) {
+      // Fetch failed (likely CORS). Try JSONP fallback.
+      const cbName = `gs_cb_${Date.now()}_${Math.floor(Math.random()*1000)}`;
+      (window)[cbName] = (data) => {
+        try {
+          resolve(data);
+        } finally {
+          delete (window)[cbName];
+        }
+      };
+
+      const script = document.createElement('script');
+      script.src = `${url}&callback=${cbName}`;
+      script.onerror = (e) => {
+        delete (window)[cbName];
+        reject(new Error('JSONP failed'));
+      };
+
+      // Timeout in 8s
+      const t = setTimeout(() => {
+        if ((window)[cbName]) {
+          delete (window)[cbName];
+          reject(new Error('JSONP timeout'));
+        }
+      }, 8000);
+
+      script.onload = () => clearTimeout(t);
+      document.head.appendChild(script);
+    }
+  });
+}
+
+// On DOM ready: ensure profile button visibility and refresh registrations
+document.addEventListener('DOMContentLoaded', async () => {
+  const btn = document.querySelector('.profile-btn');
+  if (btn) {
+    if (!localStorage.getItem('litablaze_profile')) {
+      btn.style.display = 'none';
+    } else {
+      btn.style.display = '';
+    }
+  }
+
+  // If user is logged in, try to fetch latest registrations and then update buttons
+  await fetchRegistrationsForProfile();
+  updateEventButtons();
+});
+
+function viewRegistration(eventName, litid) {
+
+  // Find matching event from eventData
+  const event = Object.values(eventData).find(
+    e => e.name === eventName
+  );
+
+  // Fill modal content
+  document.getElementById("eventName").textContent = eventName;
+
+  document.getElementById("eventExplanation").textContent =
+    event ? event.explanation : "";
+
+  document.getElementById("eventRules").textContent =
+    event ? event.rules : "";
+
+  document.getElementById("eventCriteria").textContent =
+    event ? event.criteria : "";
+
+  // Hide form, show success block
+  document.getElementById("registrationForm").style.display = "none";
+  document.getElementById("litidValue").textContent = litid;
+  document.getElementById("registrationSuccess").style.display = "block";
+
+  // Open modal
+  document.getElementById("registrationModal").classList.add("active");
+  document.body.style.overflow = "hidden";
+}
+
+
+
+
+function getSheetRegistrations() {
+  return JSON.parse(localStorage.getItem("litablaze_sheet_regs")) || {};
+}
+
+function updateEventButtons() {
+  const regs = getSheetRegistrations();
+
+  document.querySelectorAll(".event-card").forEach(card => {
+    const eventName = card.querySelector(".event-title").textContent.trim();
+    const btn = card.querySelector(".register-btn");
+
+    if (regs[eventName]) {
+      btn.textContent = "View Registration";
+      btn.onclick = () =>
+        viewRegistration(eventName, regs[eventName]);
+    } else {
+      btn.textContent = "Register";
+    }
+  });
+}
+
+// updateEventButtons already called in the DOMContentLoaded async handler above
